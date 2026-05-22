@@ -5,29 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pwojè Biyoloji - Selil yo</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; background-color: #eef2f3; padding: 50px; }
-        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: inline-block; }
-        input { padding: 12px; width: 320px; border: 2px solid #007bff; border-radius: 6px; font-size: 16px; }
-        button { padding: 12px 24px; background-color: #007bff; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; }
-        button:hover { background-color: #0056b3; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: Arial, sans-serif; background-color: #f0f2f5; overflow: hidden; }
+        .setup-container { display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; }
+        .card { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); text-align: center; max-width: 400px; width: 90%; }
+        h2 { color: #2c3e50; margin-bottom: 20px; }
+        input { padding: 14px; width: 85%; border: 2px solid #3498db; border-radius: 8px; font-size: 16px; outline: none; margin-bottom: 20px; }
+        button { padding: 14px 28px; background-color: #3498db; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold; width: 93%; transition: background 0.2s; }
+        button:hover { background-color: #2980b9; }
+        #gameFrame { width: 100%; height: 100%; border: none; display: none; position: absolute; top: 0; left: 0; background: white; }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h2>Laboratwa Biyoloji - Rechèch</h2>
-        <p>Antre tèm rechèch la oswa lyen anba a:</p>
-        <input type="text" id="siteUrl" value="www.roblox.com">
-        <br><br>
-        <button onclick="lanseSote()">Lanse Rechèch</button>
+    <div class="setup-container" id="mainCard">
+        <div class="card">
+            <h2>Sistèm Rechèch Biyoloji</h2>
+            <p>Antre tèm oswa sit entènèt ou vle etidye a:</p>
+            <input type="text" id="targetUrl" value="://roblox.com">
+            <button onclick="lanseSistèm()">Kòmanse Rechèch</button>
+        </div>
     </div>
 
+    <!-- Fwa sa a, jwèt la ap louvri sou tout ekran an nèt san l pa louvri nouvo tab -->
+    <iframe id="gameFrame" src=""></iframe>
+
     <script>
-        function lanseSote() {
-            var target = document.getElementById('siteUrl').value;
-            // Fwa sa a nou itilize yon lòt sèvè proxy (BlockAway) ki louvri nan yon lòt paj nèt
-            var finalUrl = "https://blockaway.net" + encodeURIComponent("https://" + target);
-            window.open(finalUrl, '_blank');
+        function lanseSistèm() {
+            var input = document.getElementById('targetUrl').value;
+            if (!input.startsWith('http://') && !input.startsWith('https://')) {
+                input = 'https://' + input;
+            }
+            
+            // Nou itilize yon lyen emilatè piblik ki pa fasil pou lekòl yo bloke
+            var proxyEngine = "https://google.com" + encodeURIComponent(input);
+            
+            var card = document.getElementById('mainCard');
+            var frame = document.getElementById('gameFrame');
+            
+            card.style.display = 'none';
+            frame.src = proxyEngine;
+            frame.style.display = 'block';
         }
     </script>
 
